@@ -52,6 +52,9 @@ export const StoreTile: FC<StoreTileProps> = props => {
     navigation.navigate('MapScreen', {coordinate: store.address.coordinate});
   };
 
+  const isStoreOpen = store.open;
+  const isDisabledTaskButton = isTaskActive || !isStoreOpen;
+
   const handleSetTasks = () => {
     const parsedStoreId = parseInt(store.id, 10);
     setTasksList(store.tasks, parsedStoreId);
@@ -78,7 +81,9 @@ export const StoreTile: FC<StoreTileProps> = props => {
             <ButtonPrimary onPress={handleViewMap}>
               <IconInfo text={distance} iconName="md-location-outline" />
             </ButtonPrimary>
-            <ButtonPrimary disabled={isTaskActive} onPress={handleSetTasks}>
+            <ButtonPrimary
+              disabled={isDisabledTaskButton}
+              onPress={handleSetTasks}>
               <IconInfo
                 text={`${store.tasks.length} tasks`}
                 iconName="ios-list-circle-outline"
